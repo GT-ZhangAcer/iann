@@ -1,0 +1,6 @@
+# datasets
+.datasets/*
+
+# params
+.imagenet_pretrained/*
+.experiments/*

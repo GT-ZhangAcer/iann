@@ -37,6 +37,7 @@ class ImagesDirDataset(ISDataset):
         self.dataset_samples = [v for k, v in sorted(samples.items())]
 
     def get_sample(self, index) -> DSample:
+        # print(len(self.dataset_samples), index)
         sample = self.dataset_samples[index]
         image_path = str(sample['image'])
 
@@ -44,7 +45,8 @@ class ImagesDirDataset(ISDataset):
         ignored_regions = []
         masks = []
         for indx, mask_path in enumerate(sample['masks']):
-            gt_mask = cv2.imread(str(mask_path))[:, :, 0].astype(np.int32)
+            # gt_mask = cv2.imread(str(mask_path))[:, :, 0].astype(np.int32)
+            gt_mask = cv2.imdecode(np.fromfile(str(mask_path), dtype=np.uint8), -1).astype(np.int32)
             instances_mask = np.zeros_like(gt_mask)
             instances_mask[gt_mask == 128] = 2
             instances_mask[gt_mask > 128] = 1
@@ -52,7 +54,8 @@ class ImagesDirDataset(ISDataset):
             objects.append((indx, 1))
             ignored_regions.append((indx, 2))
 
-        image = cv2.imread(image_path)
+        # image = cv2.imread(image_path)
+        image = cv2.imdecode(np.fromfile(str(image_path), dtype=np.uint8), -1)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         return DSample(image, np.stack(masks, axis=2),

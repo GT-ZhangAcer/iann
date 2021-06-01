@@ -34,6 +34,7 @@ def model_path(name, refresh=False):
 
     for _ in range(5):
         wget.download(param_url, str(local_path), bar_custom)
+        # print(local_md5, remote_md5)
         local_md5 = hashlib.md5(local_path.read_bytes()).hexdigest()
         if local_md5 == remote_md5:
             md5_path.unlink()

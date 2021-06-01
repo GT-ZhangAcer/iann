@@ -1,0 +1,42 @@
+model:
+  name: hrnet18
+  type: hrnet
+  width: 18
+  ocr_width: 64
+  small: False
+  backbone_lr_mult: 0.1
+  with_aux_output: True
+  use_leaky_relu: True
+  use_rgb_conv: False
+  use_disks: True
+  norm_radius: 5
+  weights: None
+
+point:
+  num_max_points: 24
+  prob_gamma: 0.8
+  merge_objects_prob: 0.15
+  max_num_merged_objects: 2
+
+loss:
+  instance_loss: SigmoidBinaryCrossEntropyLoss
+  instance_loss_weight: 1.0
+  instance_aux_loss: SigmoidBinaryCrossEntropyLoss
+  instance_aux_loss_weight: 0.4
+
+dataset:
+  path: E:/PdCVSIG/github/iann/iann/train/datasets
+  train_set:
+    split_name: train
+    batch_size: 4
+    crop_size: [512, 512]
+  val_set: 
+    split_name: val
+    batch_size: 4
+
+learning_rate:
+  base: 0.0005
+
+num_epochs: 20
+checkpoint_interval: 2
+image_dump_interval: 1000

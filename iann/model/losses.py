@@ -6,7 +6,7 @@ import paddle.nn.functional as F
 from util import misc
 
 
-class NormalizedFocalLossSigmoid(nn.Layer):#这个有问题
+class NormalizedFocalLossSigmoid(nn.Layer):  # 这个有问题
     def __init__(self, axis=-1, alpha=0.25, gamma=2, max_mult=-1, eps=1e-12,
                  from_sigmoid=False, detach_delimeter=True,
                  batch_axis=0, weight=None, size_average=True,
